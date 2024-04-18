@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "start:dev": "nodemon src/app.js"
   },
   "author": "adhc24-group-15",
   "license": "ISC",
@@ -16,6 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.1",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "validator": "^13.11.0"

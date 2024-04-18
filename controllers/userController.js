@@ -3,7 +3,7 @@ const saltRounds = 10
 const User = require("../models/userModel")
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv').config()
+require('dotenv').config()
 
 
 module.exports = {
@@ -38,15 +38,14 @@ module.exports = {
                 email: email,
                 password: hash
             })
-            const accessToken = jwt.sign({_id:newUser._id}, process.env.JWT_SECRET)           
+            const token = jwt.sign({_id:newUser._id}, process.env.JWT_SECRET)           
             const userInfo = {
                 _id:newUser._id, 
                 email: newUser.email,
                 createdOn : newUser.createdOn, 
-                token : accessToken
+                token
             }
             res.status(200).json({msg:"User Registered",userInfo})
-       
         }
          catch (error) {
            res.status(400).json(error.message)            
@@ -54,34 +53,40 @@ module.exports = {
     },
 
 
+    protected : (req,res)=>{
+        console.log(req.user);
+    }, 
 
     // Sign In USER 
     signin: async (req, res) => {
         const { email, password } = req.body
+      
         // check if user with info provided exists 
         try {
         if (!email.trim() || !password.trim()) {
             throw Error( "All fields are required")
         }
 
+        // check database if user with email exists 
         const user = await User.findOne({email: email })
 
         if (!user) {
            throw Error(" email does not exist")
         }
+
         //if the user exists compare the provided password with the hashed password in the database 
         const match = await bcrypt.compare(password, user.password)
         if (!match) {
             throw Error("Incorrect Password")
         }
           // if there is a match asign  token to that user 
-          const accessToken = jwt.sign({_id:newUser._id}, process.env.JWT_SECRET)
+          const token = jwt.sign({_id:user._id, email : user.email}, process.env.JWT_SECRET)
          const userInfo = {
             _id:user._id, 
             email: user.email,
             createdOn : user.createdOn, 
             username : user.username, 
-            token : accessToken
+            token
         }
         res.status(200).json({ msg: "Login successful", userInfo})
         }
