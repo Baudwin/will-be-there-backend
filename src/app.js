@@ -1,9 +1,10 @@
 const express = require("express")
 const app = express()
 const mongoose = require('mongoose')
-const port  = 3001
+const port  = 3002
 const cors = require('cors')
-
+const userRoute = require('../routes/user')
+const rsvpRoute = require("../routes/rsvp")
 
 
 app.use(express.json())
@@ -16,6 +17,8 @@ app.use(cors({
     credentials:true
 }))
 
+app.use(userRoute)
+app.use(rsvpRoute)
 
 
 mongoose.connect("Mongodb uri goes here").then(()=>{

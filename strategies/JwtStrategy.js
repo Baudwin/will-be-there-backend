@@ -6,7 +6,7 @@ const User = require("../models/userModel")
 
 const options = {
     jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.secret
+    secretOrKey: process.env.JWT_SECRET
 }
 
 
