@@ -1,46 +1,36 @@
 const Rsvp = require('../models/rsvpModel')
-const nodemailer = require('nodemailer')
+const Event = require('../models/eventModel')
+const rsvpMessage = require('../nodemailer/nodemailer')
+require('dotenv').config()
 
 module.exports = {
 
-    sendMessage : (req,res)=> {
-
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: '',
-              pass: ''
-            }
-          });
-          
-          var mailOptions = {
-            from: 'baudwin12@gmail.com',
-            to: 'blizzybaudwin@gmail.com',
-            subject: 'Sending Email using Node.js',
-            text: 'That was easy!'
-          };
-          
-          transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-            }
-          });
-
-    }, 
+    sendMessage : async(req,res)=> {
+        try {
+            const result =  await rsvpMessage()
+            res.send({result});
+        } catch (error) {
+           console.log(error); 
+        }   
+    },
 
     createRsvp : async(req,res)=>{
         const eventID = req.params.eventID
         
         const {guestName, email, attendanceStatus, plusOne, congratulatoryMessage } = req.body
         try {
+            const event = Event.findOne({_id:eventID})
+
+            if (!event) {
+                throw Error("event not found")
+            }
+
             const newRsvp = Rsvp.create({
-                eventID,guestName, email, attendanceStatus, plusOne, congratulatoryMessage
+             eventID, guestName, email, attendanceStatus, plusOne, congratulatoryMessage
             })
 
             if(attendanceStatus === "no"){
-            return  res.status(200).json({msg:"Rsvp Seccessful"}) 
+            return  res.status(200).json({msg:"Thank you for your response."}) 
             }
 
             if (attendanceStatus === "yes") {
