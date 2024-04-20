@@ -17,6 +17,7 @@ exports.getAllEvents = async (req, res) => {
 		});
 	}
 };
+
 exports.createEvent = async (req, res) => {
 	try {
 		const newEvent = await Event.create(req.body);
@@ -34,6 +35,7 @@ exports.createEvent = async (req, res) => {
 		});
 	}
 };
+
 exports.getUserEvent = async (req, res) => {
 	try {
 		const events = await Event.findById(req.params.id);
@@ -51,6 +53,7 @@ exports.getUserEvent = async (req, res) => {
 		});
 	}
 };
+
 exports.updateEvent = async (req, res) => {
 	const event = Event.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
@@ -70,6 +73,7 @@ exports.updateEvent = async (req, res) => {
 		});
 	}
 };
+
 exports.deleteEvent = async (req, res) => {
 	try {
 		await Event.findByIdAndDelete(req.params.id);
