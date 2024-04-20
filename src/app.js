@@ -12,13 +12,13 @@ app.use("/events/", eventRouter);
 app.use(
 	cors({
 		origin: ["Front end address goes here"],
-		methods: ["POST", "GET", "PUT", "DELETE"],
+		methods: ["POST", "GET", "PATCH", "DELETE"],
 		credentials: true,
 	})
 );
 
 mongoose
-	.connect("Mongodb uri goes here")
+	.connect("mongodb atlas uri here")
 	.then(() => {
 		// if server is connected to mongo db atlas
 		app.listen(port, () => {
@@ -28,6 +28,6 @@ mongoose
 	.catch((err) => {
 		// if there was an error in connecting to mongo db atlas start server only
 		app.listen(port, () => {
-			console.log(`server running on port ${port}`);
+			console.log(`${err}server running on port ${port}`);
 		});
 	});
