@@ -10,10 +10,9 @@ const options = {
 }
 
 
-passport.use( new JwtStrategy(options, async(jwt_payload, done)=>{
-   
+passport.use( new JwtStrategy(options, async(payload, done)=>{
     try {
-      const user = await User.findOne({_id:jwt_payload._id}).select('_id')
+      const user = payload
      if (user) {
         return done(null, user)
      }

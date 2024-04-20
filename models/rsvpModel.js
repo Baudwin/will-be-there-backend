@@ -7,10 +7,6 @@ const rsvpSchema = new Schema({
         type : mongoose.Schema.Types.ObjectId, ref:'Event'
     },
 
-    guestName : {
-        type : mongoose.Schema.Types.ObjectId, ref: 'User'
-    }, 
-
     email : {
         type: String,
         required: true,
@@ -19,7 +15,7 @@ const rsvpSchema = new Schema({
 
     attendanceStatus : {
         type: String,
-        enum :['Yes', "No"], 
+        enum :['yes', "no"], 
         required: true   
     }, 
 
