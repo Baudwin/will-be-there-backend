@@ -17,6 +17,7 @@ exports.getAllEvents = async (req, res) => {
 		});
 	}
 };
+
 exports.createEvent = async (req, res) => {
 	try {
 		const { eventName, location, description, eventImgUrl, date, time } =
@@ -43,6 +44,7 @@ exports.createEvent = async (req, res) => {
 		});
 	}
 };
+
 exports.getUserEvent = async (req, res) => {
 	try {
 		const events = await Event.findById(req.params.id);
@@ -60,6 +62,7 @@ exports.getUserEvent = async (req, res) => {
 		});
 	}
 };
+
 exports.updateEvent = async (req, res) => {
 	try {
 		const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
@@ -87,6 +90,7 @@ exports.updateEvent = async (req, res) => {
 		});
 	}
 };
+
 exports.deleteEvent = async (req, res) => {
 	try {
 		await Event.findByIdAndDelete(req.params.id);
