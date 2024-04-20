@@ -19,7 +19,16 @@ exports.getAllEvents = async (req, res) => {
 };
 exports.createEvent = async (req, res) => {
 	try {
-		const newEvent = await Event.create(req.body);
+		const { eventName, location, description, eventImgUrl, date, time } =
+			req.body;
+		const newEvent = await Event.create({
+			eventName,
+			location,
+			description,
+			eventImgUrl,
+			date,
+			time,
+		});
 		res.status(201).json({
 			status: "success",
 			data: {
@@ -30,7 +39,7 @@ exports.createEvent = async (req, res) => {
 		// console.log(error);
 		res.status(400).json({
 			status: "fail",
-			message: "Pls fill in the correct requirements",
+			message: "Pls fill in the correct requirements" + error,
 		});
 	}
 };
@@ -52,21 +61,29 @@ exports.getUserEvent = async (req, res) => {
 	}
 };
 exports.updateEvent = async (req, res) => {
-	const event = Event.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-	});
 	try {
+		const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+			runValidators: true,
+		});
+		if (!event) {
+			return res.status(404).json({
+				status: "fail",
+				message: "Event not found",
+			});
+		}
+
 		res.status(200).json({
 			status: "success",
 			data: {
-				message: "event updated successfully",
+				message: "Event updated successfully",
+				event: event,
 			},
 		});
 	} catch (error) {
-		res.status(404).json({
+		res.status(400).json({
 			status: "fail",
-			message: error,
+			message: "Failed to update event: " + error.message,
 		});
 	}
 };
