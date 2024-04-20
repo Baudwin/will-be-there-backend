@@ -22,14 +22,12 @@ module.exports = {
         }
 
         if (!validator.isStrongPassword(password)) {
-            throw Error(`password must be atleast 8 characters
-             , must contain an uppercase letter, a lowercase letter,
-              a number and a special character or symbol `)
+            throw Error(`password must be atleast 8 characters, must contain an uppercase letter, a lowercase letter, a number and a special character or symbol `)
         }
 
         const user = await User.findOne({email:email})
         if (user) {
-            throw Error(`Email "${email}" already in use`)
+            throw Error(`Email ${email} is already in use`)
         }
 
        const hash = await bcrypt.hash(password, saltRounds)
@@ -38,7 +36,8 @@ module.exports = {
                 email: email,
                 password: hash
             })
-            const token = jwt.sign({_id:newUser._id}, process.env.JWT_SECRET)           
+
+            const token = jwt.sign({_id:newUser._id, email : newUser.email}, process.env.JWT_SECRET)          
             const userInfo = {
                 _id:newUser._id, 
                 email: newUser.email,
@@ -54,7 +53,7 @@ module.exports = {
 
 
     protected : (req,res)=>{
-        console.log(req.user);
+        res.send(req.user);
     }, 
 
     // Sign In USER 
