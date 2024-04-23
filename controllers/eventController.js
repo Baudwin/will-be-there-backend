@@ -4,21 +4,19 @@ exports.getAllEvents = async (req, res) => {
 	try {
 		const events = await Event.find();
 		res.status(200).json({
-			status: "success",
-			results: events.length,
 			data: {
 				events,
 			},
 		});
 	} catch (error) {
 		res.status(404).json({
-			status: "fail",
 			message: error,
 		});
 	}
 };
 exports.createEvent = async (req, res) => {
 	try {
+		const { userId } = req.user;
 		const { eventName, location, description, eventImgUrl, date, time } =
 			req.body;
 		const newEvent = await Event.create({
@@ -28,34 +26,28 @@ exports.createEvent = async (req, res) => {
 			eventImgUrl,
 			date,
 			time,
+			user: userId,
 		});
 		res.status(201).json({
-			status: "success",
-			data: {
-				event: newEvent,
-			},
+			data: newEvent,
 		});
 	} catch (error) {
 		// console.log(error);
-		res.status(400).json({
-			status: "fail",
-			message: "Pls fill in the correct requirements" + error,
-		});
+		res
+			.status(400)
+			.json({ message: "Pls fill in the correct requirements" + error });
 	}
 };
 exports.getUserEvent = async (req, res) => {
 	try {
-		const events = await Event.findById(req.params.id);
+		const { userId } = req.user;
+		// Find events for the logged-in user
+		const events = await Event.find({ user: userId });
 		res.status(200).json({
-			status: "success",
-			results: events.length,
-			data: {
-				events,
-			},
+			data: events,
 		});
 	} catch (error) {
 		res.status(404).json({
-			status: "fail",
 			message: error,
 		});
 	}
@@ -68,13 +60,11 @@ exports.updateEvent = async (req, res) => {
 		});
 		if (!event) {
 			return res.status(404).json({
-				status: "fail",
 				message: "Event not found",
 			});
 		}
 
 		res.status(200).json({
-			status: "success",
 			data: {
 				message: "Event updated successfully",
 				event: event,
@@ -82,7 +72,6 @@ exports.updateEvent = async (req, res) => {
 		});
 	} catch (error) {
 		res.status(400).json({
-			status: "fail",
 			message: "Failed to update event: " + error.message,
 		});
 	}
@@ -91,12 +80,10 @@ exports.deleteEvent = async (req, res) => {
 	try {
 		await Event.findByIdAndDelete(req.params.id);
 		res.status(204).json({
-			status: "success",
 			data: null,
 		});
 	} catch (error) {
 		res.status(404).json({
-			status: "fail",
 			message: error,
 		});
 	}

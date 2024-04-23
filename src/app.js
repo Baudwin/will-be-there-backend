@@ -11,13 +11,6 @@ const eventRouter = require('../routes/eventsRouter')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use(cors({
-    origin:[ 'Front end address goes here' ],
-    methods:['POST','GET','PUT','DELETE'],
-    credentials:true
-}))
-
 app.use("/events", eventRouter);
 app.use(userRoute);
 app.use(rsvpRoute);
@@ -25,7 +18,7 @@ app.use(rsvpRoute);
 app.use(
 	cors({
 		origin: ["Front end address goes here"],
-		methods: ["POST", "GET", "PATCH", "DELETE"],
+		methods: ["POST", "GET", "PATCH", "PUT", "DELETE"],
 		credentials: true,
 	})
 );
