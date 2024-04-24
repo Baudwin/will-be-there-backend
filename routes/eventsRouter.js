@@ -9,8 +9,8 @@ const {
 } = require("../controllers/eventController");
 const router = express.Router();
 
-router.get("/allevents", getAllEvents);
-router.post("/createEvent", uploadUserImg, createEvent);
+router.get("/all-events", getAllEvents);
+router.post("/create-event", uploadUserImg, createEvent);
 
 router.get("/:userId", getUserEvent);
 router.patch("/:eventId", updateEvent);
