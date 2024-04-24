@@ -22,13 +22,7 @@ app.use("/events", eventRouter);
 app.use(userRoute);
 app.use(rsvpRoute);
 
-app.use(
-	cors({
-		origin: ["Front end address goes here"],
-		methods: ["POST", "GET", "PATCH", "DELETE"],
-		credentials: true,
-	})
-);
+
 
 mongoose.connect(process.env.MONGODB_URI).then(()=>{
     // if server is connected to mongo db atlas
