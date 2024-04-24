@@ -2,12 +2,12 @@ const Event = require("./../models/eventModel");
 const multer = require("multer");
 
 const multerStorage = multer.diskStorage({
-	destination: (req, file, cb) =>{
-		cb(null, 'public/uploads/events')
+	destination: (req, file, cb) => {
+		cb(null, "public/uploads/events");
 	},
-	filename: (req, file, cb)=>{
+	filename: (req, file, cb) => {
 		//
-	}
+	},
 });
 const upload = multer({ dest: "public/uploads/events" });
 
@@ -91,6 +91,8 @@ exports.deleteEvent = async (req, res) => {
 			data: null,
 		});
 	} catch (error) {
-		res.status(404).json(error.message);
+		res.status(400).json({
+			message: "Failed to delete event: " + error.message,
+		});
 	}
 };
