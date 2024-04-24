@@ -22,7 +22,7 @@ module.exports = {
         }
 
         if (!validator.isStrongPassword(password)) {
-            throw Error(`password must be atleast 8 characters, must contain an uppercase letter, a lowercase letter, a number and a special character or symbol `)
+            throw Error(`password must be atleast 8 characters, an uppercase letter, a lowercase letter, a number and a special character or symbol `)
         }
 
         const user = await User.findOne({email:email})
@@ -41,6 +41,7 @@ module.exports = {
             const userInfo = {
                 _id:newUser._id, 
                 email: newUser.email,
+                username: newUser.username,
                 createdOn : newUser.createdOn, 
                 token
             }
@@ -63,7 +64,7 @@ module.exports = {
         // check if user with info provided exists 
         try {
         if (!email.trim() || !password.trim()) {
-            throw Error( "All fields are required")
+            throw Error( "All fields must be provided!")
         }
 
         // check database if user with email exists 
@@ -87,7 +88,7 @@ module.exports = {
             username : user.username, 
             token
         }
-        res.status(200).json({ msg: "Login successful", userInfo})
+        res.status(200).json({ msg: "Sign In successful", userInfo})
         }
          catch (error) {
             res.status(400).json(error.message)

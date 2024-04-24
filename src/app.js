@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(cors({
-    origin:[ 'Front end address goes here' ],
+    origin:[ 'http://localhost:5178' ],
     methods:['POST','GET','PUT','DELETE'],
     credentials:true
 }))
