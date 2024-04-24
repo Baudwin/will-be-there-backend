@@ -1,5 +1,17 @@
 const Event = require("./../models/eventModel");
+const multer = require("multer");
 
+const multerStorage = multer.diskStorage({
+	destination: (req, file, cb) =>{
+		cb(null, 'public/uploads/events')
+	},
+	filename: (req, file, cb)=>{
+		//
+	}
+});
+const upload = multer({ dest: "public/uploads/events" });
+
+exports.uploadUserImg = upload.single("img");
 exports.getAllEvents = async (req, res) => {
 	try {
 		const events = await Event.find();
@@ -9,12 +21,12 @@ exports.getAllEvents = async (req, res) => {
 			},
 		});
 	} catch (error) {
-		res.status(404).json({
-			message: error,
-		});
+		res.status(404).json(error.message);
 	}
 };
 exports.createEvent = async (req, res) => {
+	console.log(req.file);
+	console.log(req.body);
 	try {
 		const { userId } = req.user;
 		const { eventName, location, description, eventImgUrl, date, time } =
@@ -33,9 +45,7 @@ exports.createEvent = async (req, res) => {
 		});
 	} catch (error) {
 		// console.log(error);
-		res
-			.status(400)
-			.json({ message: "Pls fill in the correct requirements" + error });
+		res.status(400).json(error.message);
 	}
 };
 exports.getUserEvent = async (req, res) => {
@@ -47,9 +57,7 @@ exports.getUserEvent = async (req, res) => {
 			data: events,
 		});
 	} catch (error) {
-		res.status(404).json({
-			message: error,
-		});
+		res.status(404).json(error.message);
 	}
 };
 exports.updateEvent = async (req, res) => {
@@ -83,8 +91,6 @@ exports.deleteEvent = async (req, res) => {
 			data: null,
 		});
 	} catch (error) {
-		res.status(404).json({
-			message: error,
-		});
+		res.status(404).json(error.message);
 	}
 };
