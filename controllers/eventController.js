@@ -24,6 +24,8 @@ exports.getAllEvents = async (req, res) => {
 		res.status(404).json(error.message);
 	}
 };
+
+
 exports.createEvent = async (req, res) => {
 	console.log(req.file);
 	console.log(req.body);
@@ -48,6 +50,8 @@ exports.createEvent = async (req, res) => {
 		res.status(400).json(error.message);
 	}
 };
+
+
 exports.getUserEvent = async (req, res) => {
 	try {
 		const { userId } = req.user;
@@ -60,6 +64,8 @@ exports.getUserEvent = async (req, res) => {
 		res.status(404).json(error.message);
 	}
 };
+
+
 exports.updateEvent = async (req, res) => {
 	try {
 		const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
@@ -84,6 +90,8 @@ exports.updateEvent = async (req, res) => {
 		});
 	}
 };
+
+
 exports.deleteEvent = async (req, res) => {
 	try {
 		await Event.findByIdAndDelete(req.params.id);
