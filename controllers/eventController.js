@@ -12,6 +12,7 @@ const multerStorage = multer.diskStorage({
 const upload = multer({ dest: "public/uploads/events" });
 
 exports.uploadUserImg = upload.single("img");
+
 exports.getAllEvents = async (req, res) => {
 	try {
 		const events = await Event.find();
@@ -27,10 +28,8 @@ exports.getAllEvents = async (req, res) => {
 
 
 exports.createEvent = async (req, res) => {
-	console.log(req.file);
-	console.log(req.body);
 	try {
-		const { userId } = req.user;
+		const { _id } = req.user;
 		const { eventName, location, description, eventImgUrl, date, time } =
 			req.body;
 		const newEvent = await Event.create({
@@ -40,7 +39,7 @@ exports.createEvent = async (req, res) => {
 			eventImgUrl,
 			date,
 			time,
-			user: userId,
+			user: _id,
 		});
 		res.status(201).json({
 			data: newEvent,
@@ -54,14 +53,14 @@ exports.createEvent = async (req, res) => {
 
 exports.getUserEvent = async (req, res) => {
 	try {
-		const { userId } = req.user;
+		const { _id } = req.user;
 		// Find events for the logged-in user
-		const events = await Event.find({ user: userId });
+		const events = await Event.find({ user: _id });
 		res.status(200).json({
 			data: events,
 		});
 	} catch (error) {
-		res.status(404).json(error.message);
+		res.status(404).json({msg:error.message});
 	}
 };
 
