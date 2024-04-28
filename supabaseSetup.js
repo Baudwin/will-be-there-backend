@@ -14,7 +14,7 @@ const storage = () => supabase().storage();
 
 const uploadFunction = async(fileName, fileBuffer, mimetype)=>{
     try {
-        const { data, error } = await storage().from('eventimages').upload(fileName,fileBuffer, {
+        const { data, error } = await storage.from('eventimages').upload(fileName,fileBuffer, {
           contentType: mimetype,
           cacheControl: '3600',
         }); 
