@@ -4,7 +4,7 @@ const supabaseKey = process.env.SUPABASE_KEY
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
-const uploadFunction = async(fileName, fileBuffer, mimetype)=>{
+module.exports = async(fileName, fileBuffer, mimetype)=>{
     try {
         const { data, error } = await supabase.storage.from('eventimages').upload(fileName,fileBuffer, {
           contentType: mimetype,
@@ -18,6 +18,3 @@ const uploadFunction = async(fileName, fileBuffer, mimetype)=>{
         throw error
       }
 }
-
-
-module.exports = uploadFunction
