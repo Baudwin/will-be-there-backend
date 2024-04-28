@@ -1,13 +1,13 @@
 // const uploadFunction = require("../supabaseSetup");
 const Event = require("./../models/eventModel");
 const Rsvp = require('../models/rsvpModel')
-// const multer = require("multer");
-// const upload = multer()
+const multer = require("multer");
+const upload = multer()
 
 
 module.exports = {
 
-// uploadEventImg : upload.single("img"), 
+uploadEventImg : upload.single("img"), 
 
 getAllEvents : async (req, res) => {
 	try {
