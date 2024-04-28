@@ -15,7 +15,7 @@ const authenticateJWT = require("../middleware/authenticateJwt");
 
 router.get("/all-events", getAllEvents);
 
-// router.post("/create-event",  authenticateJWT, createEvent);
+router.post("/create-event",uploadEventImg,  authenticateJWT, createEvent);
 
 router.get("/my-events",authenticateJWT, getUserEvent);
 
