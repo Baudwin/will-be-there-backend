@@ -1,4 +1,4 @@
-// const uploadFunction = require("../supabaseSetup");
+const uploadFunction = require("../supabaseSetup");
 const Event = require("./../models/eventModel");
 const Rsvp = require('../models/rsvpModel')
 const multer = require("multer");
