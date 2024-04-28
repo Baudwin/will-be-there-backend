@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {createRsvp, getUserRsvps}  = require('../controllers/rsvpController')
+// const {createRsvp, getUserRsvps}  = require('../controllers/rsvpController')
 // const authenticateJWT = require("../middleware/authenticateJwt");
 
 
