@@ -3,7 +3,7 @@ const uploadFunction = require("../supabaseSetup");
 const Event = require("./../models/eventModel");
 const Rsvp = require('../models/rsvpModel')
 const multer = require("multer");
-
+const upload = multer()
 // const multerStorage = multer.diskStorage({
 // 	destination: (req, file, cb) => {
 // 		cb(null, "public/uploads/events");
@@ -14,10 +14,12 @@ const multer = require("multer");
 // });
 // const upload = multer({ dest: "public/uploads/events" });
 
-const upload = multer()
-exports.uploadEventImg = upload.single("img");
+module.exports = {
 
-exports.getAllEvents = async (req, res) => {
+
+uploadEventImg : upload.single("img"), 
+
+getAllEvents : async (req, res) => {
 	try {
 		const events = await Event.find();
 		res.status(200).json({
@@ -28,10 +30,10 @@ exports.getAllEvents = async (req, res) => {
 	} catch (error) {
 		res.status(404).json(error.message);
 	}
-};
+},
 
 
-exports.getSingleEvent = async (req,res)=>{
+getSingleEvent: async (req,res)=>{
 	const {eventId} = req.params
 try {
 	const event = await Event.findOne({_id:eventId})
@@ -39,9 +41,9 @@ try {
 } catch (error) {
 	res.status(404).json({msg:error.message})
 }
-}
+},
 
-exports.createEvent = async (req, res) => {
+createEvent: async (req, res) => {
 	try {
 		const { eventName, location, description, date, time } =req.body;
 		const { _id } = req.user;
@@ -69,10 +71,10 @@ exports.createEvent = async (req, res) => {
 	} catch (error) {
 		res.status(400).json({msg:error.message});
 	}
-};
+},
 
 
-exports.getUserEvent = async (req, res) => {
+getUserEvent: async (req, res) => {
 	
 	try {
 		const { _id } = req.user;
@@ -88,11 +90,10 @@ exports.getUserEvent = async (req, res) => {
 	} catch (error) {
 		res.status(404).json({msg:error.message});
 	}
-};
+},
 
 
-
-exports.updateEvent = async (req, res) => {
+updateEvent: async (req, res) => {
 	try {
 		const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
 			new: true,
@@ -115,10 +116,10 @@ exports.updateEvent = async (req, res) => {
 			message: "Failed to update event: " + error.message,
 		});
 	}
-};
+},
 
 
-exports.deleteEvent = async (req, res) => {
+ deleteEvent : async (req, res) => {
 	try {
 		await Event.findByIdAndDelete(req.params.id);
 		res.status(204).json({
@@ -129,4 +130,7 @@ exports.deleteEvent = async (req, res) => {
 			message: "Failed to delete event: " + error.message,
 		});
 	}
-};
+}
+
+	
+}
