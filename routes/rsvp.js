@@ -3,7 +3,7 @@ const router = require('express').Router()
 // const authenticateJWT = require("../middleware/authenticateJwt");
 
 
-router.post("/rsvp/:eventId", createRsvp)
+// router.post("/rsvp/:eventId", createRsvp)
 // router.get("/my-rsvps",authenticateJWT, getUserRsvps)
 
 module.exports = router
