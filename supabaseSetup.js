@@ -1,7 +1,7 @@
 const supabase  = require('@supabase/supabase-js')
 const supabaseUrl = process.env.supabaseUrl
 const supabaseKey = process.env.SUPABASE_KEY
-const client = supabase.createClient(supabaseUrl, supabaseKey)
+// const client = supabase.createClient(supabaseUrl, supabaseKey)
 
 
 const uploadFunction = async(fileName, fileBuffer, mimetype)=>{
