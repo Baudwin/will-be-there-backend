@@ -10,7 +10,7 @@ const eventSchema = new Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
-		required: true,
+		required: false,
 	},
 	date: {
 		type: String,
@@ -33,7 +33,24 @@ const eventSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	eventLink: {
+		type: String,
+		required: false,
+	},
 });
+
+
+// Pre-save hook to generate the event link
+eventSchema.pre('save', function(next) {
+	const eventId = this._id 
+	// Construct the event link with the event ID
+	const eventLink = `http://localhost:5178/rsvp/${eventId}`;
+  
+	// Assign the event link to the eventLink field
+	this.eventLink = eventLink;
+  
+	next();
+  });
 
 const Event = mongoose.model("Event", eventSchema);
 module.exports = Event;

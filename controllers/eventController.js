@@ -1,17 +1,21 @@
+const { findByIdAndUpdate } = require("../models/userModel");
+const uploadFunction = require("../supabaseSetup");
 const Event = require("./../models/eventModel");
+const Rsvp = require('../models/rsvpModel')
 const multer = require("multer");
 
-const multerStorage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, "public/uploads/events");
-	},
-	filename: (req, file, cb) => {
-		//
-	},
-});
-const upload = multer({ dest: "public/uploads/events" });
+// const multerStorage = multer.diskStorage({
+// 	destination: (req, file, cb) => {
+// 		cb(null, "public/uploads/events");
+// 	},
+// 	filename: (req, file, cb) => {
+		
+// 	},
+// });
+// const upload = multer({ dest: "public/uploads/events" });
 
-exports.uploadUserImg = upload.single("img");
+const upload = multer()
+exports.uploadEventImg = upload.single("img");
 
 exports.getAllEvents = async (req, res) => {
 	try {
@@ -27,11 +31,28 @@ exports.getAllEvents = async (req, res) => {
 };
 
 
+exports.getSingleEvent = async (req,res)=>{
+	const {eventId} = req.params
+try {
+	const event = await Event.findOne({_id:eventId})
+	res.status(200).json(event);
+} catch (error) {
+	res.status(404).json({msg:error.message})
+}
+}
+
 exports.createEvent = async (req, res) => {
 	try {
+		const { eventName, location, description, date, time } =req.body;
 		const { _id } = req.user;
-		const { eventName, location, description, eventImgUrl, date, time } =
-			req.body;
+		if (!eventName.trim() || !location.trim() || !date.trim() || !time.trim()) {
+            throw Error( "All fields must be provided!")
+        }
+
+		// supabase upload setupp 
+		const data = await uploadFunction(req.file.originalname, req.file.buffer, req.file.mimetype) 
+		const  eventImgUrl = `${process.env.supabaseUrl}/storage/v1/object/public/${data.fullPath}`
+		
 		const newEvent = await Event.create({
 			eventName,
 			location,
@@ -39,30 +60,36 @@ exports.createEvent = async (req, res) => {
 			eventImgUrl,
 			date,
 			time,
-			user: _id,
+			user: _id
 		});
+
 		res.status(201).json({
 			data: newEvent,
 		});
 	} catch (error) {
-		// console.log(error);
-		res.status(400).json(error.message);
+		res.status(400).json({msg:error.message});
 	}
 };
 
 
 exports.getUserEvent = async (req, res) => {
+	
 	try {
 		const { _id } = req.user;
 		// Find events for the logged-in user
 		const events = await Event.find({ user: _id });
-		res.status(200).json({
-			data: events,
-		});
+		       // Fetch RSVPs for each event
+			   const eventsAndRsvps = [];
+			   for (const event of events) {
+				   const rsvps = await Rsvp.find({eventID: event._id});
+				   eventsAndRsvps.push({ event, rsvps });
+			   }
+		res.status(200).json(eventsAndRsvps);
 	} catch (error) {
 		res.status(404).json({msg:error.message});
 	}
 };
+
 
 
 exports.updateEvent = async (req, res) => {

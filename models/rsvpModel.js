@@ -4,13 +4,18 @@ const Schema = mongoose.Schema
 
 const rsvpSchema = new Schema({
     eventID :  {
-        type : mongoose.Schema.Types.ObjectId, ref:'Event'
+        type : mongoose.Schema.Types.ObjectId, ref:'Event',
+        required: true
     },
+
+    guestName : {
+        type: String,
+        required: true,
+    }, 
 
     email : {
         type: String,
         required: true,
-        unique: true
     }, 
 
     attendanceStatus : {
@@ -22,6 +27,11 @@ const rsvpSchema = new Schema({
     plusOne : {
         type : Array,
         default : [],
+        required: false
+    }, 
+
+    additionalItem : {
+        type : String,
         required: false
     }, 
     

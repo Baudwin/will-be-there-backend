@@ -1,7 +1,9 @@
 const router = require('express').Router()
-const {createRsvp, sendMessage}  = require('../controllers/rsvpController')
+const {createRsvp, getUserRsvps}  = require('../controllers/rsvpController')
+const authenticateJWT = require("../middleware/authenticateJwt");
 
-router.post("/create-rsvp/:eventID", createRsvp)
-router.post("/send-msg", sendMessage)
+
+router.post("/rsvp/:eventId", createRsvp)
+router.get("/my-rsvps",authenticateJWT, getUserRsvps)
 
 module.exports = router
