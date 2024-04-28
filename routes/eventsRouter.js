@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 require('../strategies/JwtStrategy')
-const {getAllEvents,createEvent,getUserEvent,updateEvent,deleteEvent,uploadEventImg,getSingleEvent} = require("../controllers/eventController");
+const {getAllEvents,createEvent,getUserEvent,updateEvent,deleteEvent,getSingleEvent} = require("../controllers/eventController");
 
 
 // const authenticateJWT = require("../middleware/authenticateJwt");
 
 router.get("/all-events", getAllEvents);
 
-router.post("/create-event", uploadEventImg,  createEvent);
+router.post("/create-event", createEvent);
 
 router.get("/my-events", getUserEvent);
 

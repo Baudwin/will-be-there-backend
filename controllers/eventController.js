@@ -4,15 +4,7 @@ const Event = require("./../models/eventModel");
 const Rsvp = require('../models/rsvpModel')
 const multer = require("multer");
 const upload = multer()
-// const multerStorage = multer.diskStorage({
-// 	destination: (req, file, cb) => {
-// 		cb(null, "public/uploads/events");
-// 	},
-// 	filename: (req, file, cb) => {
-		
-// 	},
-// });
-// const upload = multer({ dest: "public/uploads/events" });
+
 
 module.exports = {
 
