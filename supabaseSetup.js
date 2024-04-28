@@ -1,8 +1,3 @@
-// const supabase  = require('@supabase/supabase-js')
-// const supabaseUrl = process.env.supabaseUrl
-// const supabaseKey = process.env.SUPABASE_KEY
-// const client = supabase.createClient(supabaseUrl, supabaseKey)
-
 
 const { createClient } = require('@supabase/supabase-js');
 const supabaseUrl = process.env.supabaseUrl
