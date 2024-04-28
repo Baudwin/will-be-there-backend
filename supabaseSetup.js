@@ -9,12 +9,12 @@ const supabaseUrl = process.env.supabaseUrl
 const supabaseKey = process.env.SUPABASE_KEY
 
 const supabase = () => createClient(supabaseUrl, supabaseKey);
-const storage = () => supabase().storage();
+
 
 
 const uploadFunction = async(fileName, fileBuffer, mimetype)=>{
     try {
-        const { data, error } = await storage.from('eventimages').upload(fileName,fileBuffer, {
+        const { data, error } = await supabase().storage.from('eventimages').upload(fileName,fileBuffer, {
           contentType: mimetype,
           cacheControl: '3600',
         }); 
