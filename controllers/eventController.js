@@ -16,7 +16,6 @@ const upload = multer()
 
 module.exports = {
 
-
 uploadEventImg : upload.single("img"), 
 
 getAllEvents : async (req, res) => {
