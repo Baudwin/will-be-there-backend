@@ -44,7 +44,7 @@ const eventSchema = new Schema({
 eventSchema.pre('save', function(next) {
 	const eventId = this._id 
 	// Construct the event link with the event ID
-	const eventLink = `http://localhost:5178/rsvp/${eventId}`;
+	const eventLink = `https://will-be-there-xi.vercel.app/rsvp/${eventId}`;
   
 	// Assign the event link to the eventLink field
 	this.eventLink = eventLink;
