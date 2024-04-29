@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use(cors({
-    origin:[ "http://localhost:5178" ],
+    origin:[ "https://will-be-there-xi.vercel.app" ],
     methods:['POST','GET','PUT','DELETE'],
     credentials:true
 }))
