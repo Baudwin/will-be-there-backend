@@ -43,7 +43,7 @@ createEvent: async (req, res) => {
 
 		// supabase upload setupp 
 		const data = await uploadFunction(req.file.originalname, req.file.buffer, req.file.mimetype) 
-		const  eventImgUrl = `${process.env.supabaseUrl}/storage/v1/object/public/${data.fullPath}`
+		const  eventImgUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/${data.fullPath}`
 		const newEvent = await Event.create({
 			eventName,
 			location,
