@@ -34,9 +34,11 @@ try {
 },
 
 createEvent: async (req, res) => {
-	try {
-		const { eventName, location, description, date, time } =req.body;
+	const { eventName, location, description, date, time } =req.body;
 		const { _id } = req.user;
+		
+	try {
+		
 		if (!eventName.trim() || !location.trim() || !date.trim() || !time.trim()) {
             throw Error( "All fields must be provided!")
         }
@@ -58,7 +60,8 @@ createEvent: async (req, res) => {
 			data: newEvent,
 		});
 	} catch (error) {
-		res.status(400).json(error);
+		res.status(400).json({msg:error.message})
+		
 	}
 },
 
