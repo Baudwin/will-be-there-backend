@@ -36,7 +36,7 @@ try {
 createEvent: async (req, res) => {
 	const { eventName, location, description, date, time } =req.body;
 		const { _id } = req.user;
-		
+
 	try {
 		
 		if (!eventName.trim() || !location.trim() || !date.trim() || !time.trim()) {
@@ -75,7 +75,7 @@ getUserEvent: async (req, res) => {
 		       // Fetch RSVPs for each event
 			   const eventsAndRsvps = [];
 			   for (const event of events) {
-				   const rsvps = await Rsvp.find({eventID: event._id});
+				   const rsvps = await Rsvp.find({eventID: event._id, attendanceStatus:"yes"});
 				   eventsAndRsvps.push({ event, rsvps });
 			   }
 		res.status(200).json(eventsAndRsvps);
