@@ -9,7 +9,7 @@ module.exports = {
         const {eventId} = req.params 
         const {guestName, email, attendanceStatus,additionalItem,  plusOne, congratulatoryMessage } = req.body
         try {
-            const existingRsvp = await Rsvp.findOne({email:email})
+            const existingRsvp = await Rsvp.findOne({email:email, eventID:eventId})
             if (existingRsvp) {
               throw Error("You have already RSVPd for this event.")  
             }
