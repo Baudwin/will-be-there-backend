@@ -51,13 +51,13 @@ const htmlContent = `
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-              user: process.env.GMAIL_EMAIL,
-              pass: process.env.GMAIL_PASSWORD
+              user: process.env.EMAIL_USERNAME,
+              pass: process.env.EMAIL_PASSWORD
             }
           });
           
           let mailOptions = {
-            from: process.env.GMAIL_EMAIL,
+            from: process.env.EMAIL_USERNAME,
             to: userEmail,
             subject: `RSVP confirmation for ${eventName}`,
             text: '',
