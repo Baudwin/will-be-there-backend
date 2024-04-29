@@ -44,7 +44,7 @@ createEvent: async (req, res) => {
 		// supabase upload setupp 
 		const data = await uploadFunction(req.file.originalname, req.file.buffer, req.file.mimetype) 
 		const  eventImgUrl = `${process.env.supabaseUrl}/storage/v1/object/public/${data.fullPath}`
-		
+		console.log(eventImgUrl)
 		const newEvent = await Event.create({
 			eventName,
 			location,
@@ -59,7 +59,7 @@ createEvent: async (req, res) => {
 			data: newEvent,
 		});
 	} catch (error) {
-		res.status(400).json({msg:error.message});
+		res.status(400).json(error);
 	}
 },
 
