@@ -66,7 +66,7 @@ const rsvpMessage = async(userEmail,guestName,eventName, eventImgUrl,location, d
       h2>Your RSVP Details:</h2>
       <p><strong>Number of Guests:</strong> ${plusOne.length}</p>
       <p><strong>Plus Ones:</strong> ${plusOne.join(', ')}</p>
-      <p><strong>Additional Items:</strong> ${rsvp.additionalItem}</p>
+      <p><strong>Additional Items:</strong> ${additionalItem}</p>
       <p>If you have any questions or need further information, feel free to contact us.</p>
       <p>We look forward to seeing you there!</p>
       <div class="footer">
