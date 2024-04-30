@@ -9,10 +9,10 @@ module.exports = {
         const {eventId} = req.params 
         const {guestName, email, attendanceStatus,additionalItem,  plusOne, congratulatoryMessage } = req.body
         try {
-            const existingRsvp = await Rsvp.findOne({email:email, eventID:eventId})
-            if (existingRsvp) {
-              throw Error("You have already RSVPd for this event.")  
-            }
+            // const existingRsvp = await Rsvp.findOne({email:email, eventID:eventId})
+            // if (existingRsvp) {
+            //   throw Error("You have already RSVPd for this event.")  
+            // }
 
             if (!guestName.trim() || !email.trim() || !attendanceStatus.trim()) {
                 throw Error( "All fields must be provided!")
