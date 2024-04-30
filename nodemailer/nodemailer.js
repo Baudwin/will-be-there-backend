@@ -63,6 +63,10 @@ const rsvpMessage = async(userEmail,guestName,eventName, eventImgUrl,location, d
       <p><strong>Date:</strong> ${date}</p>
       <p><strong>Time:</strong> ${time}</p>
       <p><strong>Location:</strong> ${location}</p>
+      h2>Your RSVP Details:</h2>
+      <p><strong>Number of Guests:</strong> ${plusOne.length}</p>
+      <p><strong>Plus Ones:</strong> ${plusOne.join(', ')}</p>
+      <p><strong>Additional Items:</strong> ${rsvp.additionalItem}</p>
       <p>If you have any questions or need further information, feel free to contact us.</p>
       <p>We look forward to seeing you there!</p>
       <div class="footer">
@@ -100,11 +104,11 @@ const rsvpMessage = async(userEmail,guestName,eventName, eventImgUrl,location, d
 //     <li><strong>Description:</strong> ${description}</li>
 //   </ul>
 
-//   <h3>Your RSVP Details:</h3>
-//   <ul>
-//     <li><strong>Number of Plus Ones:</strong> ${plusOne.length}</li>
-//     <li><strong>Plus One(s):</strong> ${plusOne.join(', ')}</li>
-//   </ul>
+  // <h3>Your RSVP Details:</h3>
+  // <ul>
+  //   <li><strong>Number of Plus Ones:</strong> ${plusOne.length}</li>
+  //   <li><strong>Plus One(s):</strong> ${plusOne.join(', ')}</li>
+  // </ul>
 
 //   <p>We look forward to having you at the event!</p>
 
